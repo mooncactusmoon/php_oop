@@ -1,4 +1,7 @@
 <?php
+interface sound{
+    public function sound();
+}
 
 //宣告類別(樣本概念)
 //public外部可存取，protected private外部無法存取
@@ -12,6 +15,9 @@ class Animal{
         $this->name='john';
         $this->heartbeat=rand(20,60);
 
+    }
+    public function sound(){
+        return "helloooo";
     }
     public function getName(){
         return $this->name;
@@ -46,6 +52,9 @@ class Dog extends Animal{
     public function setColor($color){
         return $this->hair_color=$color;
     }
+    public function sound(){
+        return "汪汪叫";
+    }
 
     //複寫
     public function getName(){
@@ -63,6 +72,9 @@ class Cat extends Animal{
     public function setColor($color){
         return $this->hair_color=$color;
     }
+    public function sound(){
+        return "喵喵叫";
+    }
 
     //複寫
     public function getName(){
@@ -78,6 +90,8 @@ $dog->setName('make');
 echo $dog->getName();
 echo "<br>";
 echo $dog->getColor();
+echo "<br>";
+echo $dog->sound();
 echo "<hr>";
 
 $cat=new Cat;
@@ -88,5 +102,9 @@ echo $cat->getName();
 echo "<br>";
 echo $cat->getColor();
 echo "<br>";
+echo $cat->sound();
 
+echo "<hr>";
+$animal=new Animal;
+echo $animal->sound();
 ?>
