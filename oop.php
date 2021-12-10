@@ -15,6 +15,9 @@ class Animal{
     public function getName(){
         return $this->name;
     }
+    public function getHeartbeat(){
+        return $this->heartbeat;
+    }
     public function setName($name){
         $this->name=$name;
     }
@@ -23,8 +26,9 @@ class Animal{
 $animal=new Animal;
 
 echo $animal->getName();
+echo "<br>";
 $animal->setName('YOYO');
 echo $animal->getName();
-
-
+echo "<br>";
+echo $animal->getHeartbeat();
 ?>
