@@ -1,4 +1,5 @@
 <?php
+
 //宣告類別(樣本概念)
 //public外部可存取，protected private外部無法存取
 class Animal{
@@ -23,12 +24,69 @@ class Animal{
     }
 }
 
-$animal=new Animal;
-
+/**$animal=new Animal;
 echo $animal->getName();
 echo "<br>";
 $animal->setName('YOYO');
 echo $animal->getName();
 echo "<br>";
 echo $animal->getHeartbeat();
+echo "<hr>";
+$dog=new Animal;
+$dog->setName('herry');
+echo $dog->getName();**/
+
+class Dog extends Animal{
+    protected $hair_color="black";
+
+
+    public function getColor(){
+        return $this->hair_color;
+    }
+    public function setColor($color){
+        return $this->hair_color=$color;
+    }
+
+    //複寫
+    public function getName(){
+        return 'my name is '.$this->name;
+    }
+
+}
+class Cat extends Animal{
+    protected $hair_color="black";
+
+
+    public function getColor(){
+        return $this->hair_color;
+    }
+    public function setColor($color){
+        return $this->hair_color=$color;
+    }
+
+    //複寫
+    public function getName(){
+        return 'I am '.$this->name;
+    }
+
+}
+
+$dog=new Dog;
+echo $dog->getName();
+echo "<br>";
+$dog->setName('make');
+echo $dog->getName();
+echo "<br>";
+echo $dog->getColor();
+echo "<hr>";
+
+$cat=new Cat;
+echo $cat->getName();
+echo "<br>";
+$cat->setName('JJ');
+echo $cat->getName();
+echo "<br>";
+echo $cat->getColor();
+echo "<br>";
+
 ?>
