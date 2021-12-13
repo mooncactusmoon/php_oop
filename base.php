@@ -107,7 +107,28 @@ class DB{
             return $this->pdo->query($sql)->fetchColumn();
     }
 
-    //新增或更新資料
+    //新增或更新資料 (一定要是陣列) 僅限一次一筆資料
+    public function save($array){
+        if(isset($array['id'])){
+            //update
+            foreach($array as $key => $value){
+                //優雅寫法 sprint_f("`%s`='%s'",$key,$value) %s代表字串
+                if($key!='id'){//$key的判斷可加可不加，結果一樣，但程式碼有潔癖的建議加上
+                    $tmp[]="`$key`='$value'"; //暴力寫法
+                }
+            }
+            $sql="UPDATE $this->table SET ".implode(" , ",$tmp);
+            $sql .= " WHERE `id`='{$array['id']}'";
+            
+            //UPDATE $this->table SET col1=value1,col=value2...where id=? && col1=value1
+        }else{
+            //insert
+        }
+
+        echo $sql;
+        return $this->pdo->exec($sql);
+
+    }
 
     //刪除資料
 
@@ -142,8 +163,11 @@ class DB{
 
 $db=new DB('detail');
 echo "<pre>";
-print_r($db->q("select * from `detail` where `cash`<=100"));
+print_r($db->save(['id'=>4,'cash'=>7850,'place'=>'PCHome web']));
 echo "</pre>"; 
+// echo "<pre>";
+// print_r($db->q("select * from `detail` where `cash`<=100"));
+// echo "</pre>"; 
 // echo "<pre>";
 // print_r($db->del(10));
 // echo "</pre>"; 
