@@ -123,9 +123,21 @@ class DB{
             //UPDATE $this->table SET col1=value1,col=value2...where id=? && col1=value1
         }else{
             //insert
+            
+            // $keys=array_keys($array);
+            // $cols=implode("`,`",$keys);
+            // $values=implode("','",$array);
+            // echo $cols."<br>";
+            // echo $values."<br>";
+            // $sql="INSERT INTO $this->table (`{$cols}`) VALUE('{$values}')";
+            
+            $sql="INSERT INTO $this->table (`".implode("`,`",array_keys($array))."`)
+                                    VALUE('".implode("','",$array)."')";
+            
+            //INSERT INTO $this->table(`col1`,`col2`,`col3`...)VALUES('value1','value2','value3'...)
         }
 
-        echo $sql;
+        // echo $sql;
         return $this->pdo->exec($sql);
 
     }
@@ -162,14 +174,19 @@ class DB{
 }
 
 $db=new DB('detail');
-echo "<pre>";
-print_r($db->save(['id'=>4,'cash'=>7850,'place'=>'PCHome web']));
-echo "</pre>"; 
+// echo "<pre>";
+//沒有id就會變新增
+// print_r($db->save(['cash'=>120,'place'=>'eat']));
+// echo "</pre>"; 
+// echo "<pre>";
+//有id就是update
+// print_r($db->save(['id'=>4,'cash'=>7850,'place'=>'PCHome web']));
+// echo "</pre>"; 
 // echo "<pre>";
 // print_r($db->q("select * from `detail` where `cash`<=100"));
 // echo "</pre>"; 
 // echo "<pre>";
-// print_r($db->del(10));
+// print_r($db->del(15));
 // echo "</pre>"; 
 // echo "<pre>";
 // print_r($db->math('sum','cash',['item'=>'早餐']));
