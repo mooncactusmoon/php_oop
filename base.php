@@ -81,10 +81,55 @@ class DB{
     }
 
     //計算某個欄位或是計算符合條件的筆數
+    //max,min,sum,count,avg
+    public function math($math,$col,...$arg){
+        $sql="SELECT $math($col) FROM $this->table ";
+        //依參數數量來決定進行的動作因此使用switch...case
+        switch(count($arg)){
+            case 1:
+                if(is_array($arg[0])){
+                    foreach($arg[0] as $key => $value){
+                        $tmp[]="`$key`='$value'";
+                    }
+                    $sql.=" WHERE ". implode(" AND " ,$tmp);
+                }else{    
+                    $sql.=$arg[0];
+                }
+            break;
+            case 2:
+                foreach($arg[0] as $key => $value){
+                    $tmp[]="`$key`='$value'";
+                }
+                $sql.=" WHERE ". implode(" AND " ,$tmp) . $arg[1];
+            break;
+            }
+            echo $sql;
+            return $this->pdo->query($sql)->fetchColumn();
+    }
 
     //新增或更新資料
 
     //刪除資料
+
+    public function del($id){
+        $sql="DELETE FROM $this->table WHERE ";
+        if(is_array($id)){
+
+            foreach($id as $key => $value){
+                $tmp[]="`$key`='$value'";
+            }
+
+            $sql .= implode(' AND ',$tmp);
+
+        }else{
+            //$sql = $sql . "" 可寫成 $sql .= (累加)
+            $sql .= " id='$id'";
+        }
+
+        //echo $sql;
+
+        return $this->pdo->exec($sql);
+    }
 
     //萬用的查詢
 
@@ -94,9 +139,15 @@ class DB{
 
 $db=new DB('detail');
 echo "<pre>";
-print_r($db->find(['cash'=>'500']));
-echo "</pre>";
-echo "<pre>";
-print_r($db->all(['cash'=>'500']));
-echo "</pre>";
+print_r($db->del(10));
+echo "</pre>"; 
+// echo "<pre>";
+// print_r($db->math('sum','cash',['item'=>'早餐']));
+// echo "</pre>"; 
+// echo "<pre>";
+// print_r($db->math('max','cash',['item'=>'早餐']));
+// echo "</pre>"; 
+// echo "<pre>";
+// print_r($db->all(['cash'=>'500']));
+// echo "</pre>";
 ?>
