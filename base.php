@@ -132,6 +132,9 @@ class DB{
     }
 
     //萬用的查詢
+    public function q($sql){
+        return $this->pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+    }
 
 
 
@@ -139,8 +142,11 @@ class DB{
 
 $db=new DB('detail');
 echo "<pre>";
-print_r($db->del(10));
+print_r($db->q("select * from `detail` where `cash`<=100"));
 echo "</pre>"; 
+// echo "<pre>";
+// print_r($db->del(10));
+// echo "</pre>"; 
 // echo "<pre>";
 // print_r($db->math('sum','cash',['item'=>'早餐']));
 // echo "</pre>"; 
